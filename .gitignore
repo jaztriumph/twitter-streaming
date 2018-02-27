@@ -1,0 +1,7 @@
+/.idea/
+.env
+/trackdownenv
+*.pyc
+*.gz
+*.sqlite3
+*.sqlite3-journal
