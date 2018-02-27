@@ -47,6 +47,7 @@ def save_tweets(data):
             tweetInfo.retweet_count = tweet['retweet_count']
             tweetInfo.reply_count = tweet['reply_count']
             tweetInfo.language = tweet['lang']
+            tweetInfo.hash_tags_count = len(tweet['entities']['hashtags'])
             hashtags = []
             try:
                 for i in range(0, len(tweet['entities']['hashtags'])):
@@ -54,6 +55,8 @@ def save_tweets(data):
                 tweetInfo.set_hashtags(hashtags)
             except:
                 print('hash_error')
+
+            tweetInfo.user_mentions_count = len(tweet['entities']['user_mentions'])
             user_mentions = []
             try:
                 for i in range(0, len(tweet['entities']['user_mentions'])):

@@ -39,4 +39,4 @@ class TweetInfoAdmin(admin.ModelAdmin):
     def reply_count(self, obj):
         return obj.reply_count
 
-    list_display = ['user_name', 'screen_name', 'text', 'reply_count', 'user_mentions']
+    list_display = ['user_name', 'screen_name', 'text', 'user_mentions']

@@ -1,4 +1,6 @@
-from django.http import Http404
+import csv
+
+from django.http import Http404, HttpResponse
 from rest_framework import pagination
 from rest_framework.generics import ListAPIView
 
@@ -17,6 +19,13 @@ class SearchApi(ListAPIView):
             return results
         raise Http404('Invalid search')
 
+    def get(self, request, *args, **kwargs):
+        self.format = request.GET.get('format', False)
+        if self.request.GET.get('csv') is not None:
+            print('download')
+            return HttpResponse(download_csv(self.get_queryset()), content_type='text/csv')
+        return super(SearchApi, self).get(request, *args, **kwargs)
+
 
 class FilterApi(ListAPIView):
     pagination.CursorPagination.ordering = '-created_at'
@@ -29,7 +38,7 @@ class FilterApi(ListAPIView):
         max_reply_tweet_count = self.request.GET.get('max_reply_tweet_count')
         min_reply_tweet_count = self.request.GET.get('min_reply_tweet_count')
         max_retweet_count = self.request.GET.get('max_retweet_count')
-        min_retweet_count = self.request.GET.get('min_tweet_count')
+        min_retweet_count = self.request.GET.get('min_retweet_count')
         min_quote_count = self.request.GET.get('min_qot_count')
         max_quote_count = self.request.GET.get('max_qot_count')
         language = self.request.GET.get('lan')
@@ -125,7 +134,7 @@ class FilterApi(ListAPIView):
 
         # language filter
         if language is not None:
-            results = results.filter(equals=language)
+            results = results.filter(language=language)
             is_filtered = True
 
         # username filter
@@ -156,8 +165,15 @@ class FilterApi(ListAPIView):
             is_filtered = True
 
         if is_filtered:
+            download_csv(results)
             return results
         raise Http404("Invalid filter")
+
+    def get(self, request, *args, **kwargs):
+        self.format = request.GET.get('format', False)
+        if self.request.GET.get('csv') is not None:
+            return HttpResponse(download_csv(self.get_queryset()), content_type='text/csv')
+        return super(FilterApi, self).get(request, *args, **kwargs)
 
 
 def represents_int(i):
@@ -166,3 +182,17 @@ def represents_int(i):
         return True
     except (TypeError, ValueError):
         return False
+
+
+def download_csv(data):
+    field_names = ['user_name', 'screen_name', 'language', 'user_favorite_count', 'user_friends_count', 'user_followers_count', 'quote_count',
+                   'reply_count', 'retweet_count', 'favorite_count', 'hash_tags_count', 'user_mentions_count']
+    response = HttpResponse(content_type='text/csv')
+    # force download.
+    response['Content-Disposition'] = 'attachment;filename=export.csv'
+    writer = csv.writer(response)
+    writer.writerow(field_names)
+    # Write data rows
+    for obj in data:
+        writer.writerow([getattr(obj, field) for field in field_names])
+    return response

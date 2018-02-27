@@ -19,7 +19,9 @@ class TweetInfo(models.Model):
     retweet_count = models.IntegerField()
     favorite_count = models.IntegerField()
     hash_tags = models.TextField(max_length=1000, default='')
+    hash_tags_count = models.IntegerField(default=0)
     user_mentions = models.TextField(max_length=1000, default='')
+    user_mentions_count = models.IntegerField(default=0)
 
     def set_hashtags(self, x):
         self.hash_tags = json.dumps(x)
