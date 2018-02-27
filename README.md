@@ -15,12 +15,11 @@
  ## API Usage
 
  ### Search API
- `api/search/?search_key=<your_search_key>`
-
- this gives the tweets according to 'your_search_key' in pages of maxiumum of 20 tweets each.
+`api/search/?search_key=<your_search_key>` 
+this gives the tweets according to 'your_search_key' in pages with maximum of 20 tweets each.
  
  Example:
- when running in local server `http://localhost:8000/api/search/?search_key=good`
+ when running in local server `http://localhost:8000/api/search/?search_key=good` the json response would be
  
  
  Json Response:  ```{
@@ -45,7 +44,8 @@
             "user_mentions": "[\"HEADmaster\"]"
         },..........]```
  
- In the response previous and next url contains link for next amd previous data and results contains tweets information
+ In the response previous and next url contains link for next amd previous data and results contains tweets information.
+ Response is same for all APIs.
  
  ----------------------------------------
  ### Filter API
@@ -83,9 +83,20 @@ All the filters available are listed below:
 
  Example:
  
- `http://localhost:8000/api/filter/?lan=en&?min_retweet_count=500&?user_sw='joh'`
+ `http://localhost:8000/api/filter/?lan=en&min_retweet_count=500&user_sw='joh'`
  
  the above request returns tweets in english with username starting with 'joh' and with retweets greater than 500.
  
  for language code see [here](https://www.loc.gov/standards/iso639-2/php/code_list.php).
  
+ 
+ --------------------------
+ ### To Csv
+ 
+ To get the whole filtered data into csv just add a csv parameter.
+ 
+ Example
+ 
+  `http://localhost:8000/api/filter/?lan=en&min_retweet_count=500&user_sw='joh'&csv=` for filter API.
+  
+  `http://localhost:8000/api/search/?search_key=good&csv=` for Search API
