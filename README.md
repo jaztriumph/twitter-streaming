@@ -52,7 +52,7 @@
  
  `api/filter/?user_ew=<user_name_ends_with_key>&min_user_fav_count=<min_number_of_favourites_user_must_have>`
  
-filter has many fields listed below:
+All the filters available are listed below:
 
           keys                                         filter information
     'text_search_key'                         searches for specified key in text of tweet
