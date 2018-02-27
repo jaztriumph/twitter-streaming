@@ -3,5 +3,5 @@
 /trackdownenv
 *.pyc
 *.gz
-*.sqlite3
-*.sqlite3-journal
+twitterdb.sqlite3
+twitterdb.sqlite3-journal
