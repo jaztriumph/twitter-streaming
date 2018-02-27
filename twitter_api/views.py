@@ -35,7 +35,7 @@ class FilterApi(ListAPIView):
         language = self.request.GET.get('lan')
         user_ends_with = self.request.GET.get('user_ew')
         user_starts_with = self.request.GET.get('user_sw')
-        hashtag = self.request.GET.get('has_tag')
+        hashtag = self.request.GET.get('hash_tag')
         user_mentions = self.request.GET.get('user_men')
         min_user_favorite_count = self.request.GET.get('min_user_fav_count')
         max_user_favorite_count = self.request.GET.get('max_user_fav_count')
