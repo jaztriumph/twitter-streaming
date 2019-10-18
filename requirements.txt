@@ -14,7 +14,7 @@ django-redis==4.8.0
 django-redis-cache==1.7.1
 django-rest-framework==0.1.0
 django-rq==1.0.1
-djangorestframework==3.7.7
+djangorestframework==3.9.1
 djangotoolbox==1.8.0
 idna==2.6
 include==0.2.1
